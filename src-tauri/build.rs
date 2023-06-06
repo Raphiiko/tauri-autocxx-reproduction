@@ -11,12 +11,21 @@ fn main() {
         .expect("Could not autogenerate bindings");
     // arbitrary library name, pick anything
     b.flag_if_supported("-std=c++14").compile("foobar");
+    println!("cargo:rerun-if-changed=src/main.rs");
+
     // Link the C++ libraries
     #[cfg(target_os = "windows")]
     let input_files = [
         relative("openvr/bin/win64/openvr_api.dll"),
         relative("openvr/lib/win64/openvr_api.lib"),
     ];
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    let input_files = [relative("openvr/bin/linux64/libopenvr_api.so")];
+    #[cfg(all(target_os = "linux", target_arch = "x86"))]
+    let input_files = [relative("openvr/bin/linux32/libopenvr_api.so")];
+    #[cfg(target_os = "macos")]
+    let input_files: [PathBuf; 1] = [panic!("Mac is unsupported")];
+
     let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     for f in input_files {
         let file_name = f.file_name().unwrap();
@@ -24,6 +33,9 @@ fn main() {
             panic!("Failed to copy {:?} to {:?}: {err}", file_name, &out_dir)
         });
     }
+
+    println!("cargo:rustc-link-lib=dylib=openvr_api");
+    println!("cargo:rustc-link-search=native={:?}", out_dir);
     // Run tauri build
     tauri_build::build()
 }

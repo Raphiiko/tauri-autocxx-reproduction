@@ -10,11 +10,13 @@ include_cpp! {
 
 fn main() {
     tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![unsafe_function])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 // This command or function is never called!
+#[tauri::command]
 async fn unsafe_function() {
     unsafe {
         ffi::vr::VR_Shutdown(); // When you comment this out, `tauri dev` works fine

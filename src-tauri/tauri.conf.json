@@ -3,10 +3,10 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:4201",
-    "distDir": "../dist/"
+    "distDir": "../dist"
   },
   "package": {
-    "productName": "unsafe-example",
+    "productName": "autocxx-example",
     "version": "0.1.0"
   },
   "tauri": {
@@ -28,7 +28,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "co.raphii.tauri-unsafe-example",
+      "identifier": "co.raphii.tauri-autocxx-example",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
