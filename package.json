@@ -1,0 +1,14 @@
+{
+  "name": "unsafe-example",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "cd dist && http-server -p 4201",
+    "build": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
