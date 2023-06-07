@@ -15,10 +15,10 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-// This command or function is never called!
+// Note that this command or function is never called. It is only here to demonstrate the issue.
 #[tauri::command]
 async fn unsafe_function() {
     unsafe {
-        ffi::vr::VR_Shutdown(); // When you comment this out, `tauri dev` works fine
+        ffi::vr::VR_Shutdown(); //L22: When you comment this out, `tauri dev` works fine
     }
 }
